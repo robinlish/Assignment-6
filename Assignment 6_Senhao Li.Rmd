@@ -9,7 +9,7 @@ library(ggmap)
 ```
 
 ```{r}
-bude <- geocode("bude England UK")
+bude <- geocode("Bude, UK")
 beach <- geocode(c("Summerleaze Beach Bude UK","Crooklets Beach Bude UK"))
 ```
 #roadmap
@@ -24,14 +24,14 @@ ggmap(budemap)+geom_point(
 ```
 #cricket ground
 ```{r}
-cricket <- geocode("Cricket Club Bude UK")
+cricket <- geocode("Cricket Club Bude, UK")
 ggmap(budemap)+geom_point(
   aes(x=lon,y=lat),data=beach,fill="red",size=3,shape=25,stroke=1)+geom_point(
     aes(x=lon,y=lat),data=cricket,fill="red",size=3,shape=23,stroke=1)
 ```
 #a nearby pub
 ```{r}
-pub <- geocode("Crooklets Inn Bude UK")
+pub <- geocode("Crooklets Inn Bude ,UK")
 ggmap(budemap)+geom_point(
   aes(x=lon,y=lat),data=beach,fill="red",size=3,shape=25,stroke=1)+geom_point(
     aes(x=lon,y=lat),data=cricket,fill="red",size=3,shape=23,stroke=1)+geom_point(
@@ -39,8 +39,8 @@ ggmap(budemap)+geom_point(
 ```
 #route from cricket ground to the pub
 ```{r}
-from <- "Cricket Club Bude UK"
-to <- "Crooklets Inn Bude UK"
+from <- "Cricket Club Bude, UK"
+to <- "Crooklets Inn Bude, UK"
 route <- route(from,to,structure="route")
 ggmap(budemap)+geom_point(
   aes(x=lon,y=lat),data=beach,fill="red",size=3,shape=25,stroke=1)+geom_point(
@@ -50,6 +50,22 @@ ggmap(budemap)+geom_point(
   data = route, lineend = "round"
 )
 ```
+#Hotels
+```{r}
+hotel.d <- data.frame(lat=c(50.831393,50.831501),
+                    lon=c(-4.548689,-4.549108),
+                    hotel=c("Edgcumbe Hotel","The Beach At Bude"))
+
+ggmap(budemap)+geom_point(
+  aes(x=lon,y=lat),data=beach,fill="red",size=3,shape=25,stroke=1)+geom_point(
+    aes(x=lon,y=lat),data=cricket,fill="red",size=3,shape=23,stroke=1)+geom_point(
+      aes(x=lon,y=lat),data=pub,fill="red",size=3,shape=21,stroke=1)+geom_path(
+  aes(x = lon, y = lat),  colour = "red", size = 1.5,
+  data = route, lineend = "round"
+)+ geom_point(dat = hotel.d, aes(x=lon, y=lat, color = hotel),size =3)
+```
+
+
 #watercolor
 ```{r}
 budemap1 <- get_map(bude,zoom=14,maptype="watercolor")
@@ -62,14 +78,14 @@ ggmap(budemap1)+geom_point(
 ```
 #cricket ground
 ```{r}
-cricket <- geocode("Cricket Club Bude UK")
+cricket <- geocode("Cricket Club Bude ,UK")
 ggmap(budemap1)+geom_point(
   aes(x=lon,y=lat),data=beach,fill="red",size=3,shape=25,stroke=1)+geom_point(
     aes(x=lon,y=lat),data=cricket,fill="red",size=3,shape=23,stroke=1)
 ```
 #a nearby pub
 ```{r}
-pub <- geocode("Crooklets Inn Bude UK")
+pub <- geocode("Crooklets Inn Bude ,UK")
 ggmap(budemap1)+geom_point(
   aes(x=lon,y=lat),data=beach,fill="red",size=3,shape=25,stroke=1)+geom_point(
     aes(x=lon,y=lat),data=cricket,fill="red",size=3,shape=23,stroke=1)+geom_point(
@@ -77,8 +93,8 @@ ggmap(budemap1)+geom_point(
 ```
 #route from cricket ground to the pub
 ```{r}
-from <- "Cricket Club Bude UK"
-to <- "Crooklets Inn Bude UK"
+from <- "Cricket Club Bude ,UK"
+to <- "Crooklets Inn Bude ,UK"
 route <- route(from,to,structure="route")
 ggmap(budemap1)+geom_point(
   aes(x=lon,y=lat),data=beach,fill="red",size=3,shape=25,stroke=1)+geom_point(
@@ -88,3 +104,17 @@ ggmap(budemap1)+geom_point(
         data = route, lineend = "round"
       )
 ```
+
+```{r}
+ggmap(budemap1)+geom_point(
+  aes(x=lon,y=lat),data=beach,fill="red",size=3,shape=25,stroke=1)+geom_point(
+    aes(x=lon,y=lat),data=cricket,fill="red",size=3,shape=23,stroke=1)+geom_point(
+      aes(x=lon,y=lat),data=pub,fill="red",size=3,shape=21,stroke=1)+geom_path(
+  aes(x = lon, y = lat),  colour = "red", size = 1.5,
+  data = route, lineend = "round"
+)
+```
+
+
+![Hotel: The Beach at Bude](beach.jpg)
+![Hotel: Edgcumb](edgcumbe.jpg)
